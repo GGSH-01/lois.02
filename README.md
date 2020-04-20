@@ -1,1 +1,1 @@
-# lois.02
+#  https://ggsh-01.github.io/lois.02/
