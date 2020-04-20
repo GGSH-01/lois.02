@@ -1,13 +1,3 @@
-//ЛР 1. Вариант b. Проверить является ли строка формулой логики высказываний.
-//ЛР 2. Вариант 1. Вычислить возможные значения формулы при частично заданной интерпретации формулы
-//      (частично заданных значениях пропозициональных переменных).
-//      Результат оформить в виде таблицы.
-
-//Автор: Никифоров С. А. Гр. 621702
-
-
-//ЛР1
-
 const NEGATION = "!";
 const CONJUNCTION = "&";
 const DISJUNCTION = "|";
@@ -40,13 +30,9 @@ function stringWithPartialValuesCheck(inputStringVar){
 		}
 	//унарная формула
 	} else if(inputStringVar.match(/^\(!([A-Z]|[0-1]|(\((\(|\)|[A-Z]|[0-1]|!|&|~|\||(->))+\)))\)$/)){
-		/*if(stringWithPartialValuesCheck(inputStringVar.substring(2, inputStringVar.length - 1))){
-			return true;
-		} else {
-			return false;*/
+
 			return (stringWithPartialValuesCheck(inputStringVar.substring(2, inputStringVar.length - 1)));
-		//}
-	//бинарная формула                 (первая подформула __________________________________)(связка_____)(вторая подформула __________________________________)
+
 	} else if(inputStringVar.match(/^\(([A-Z]|[0-1]|(\((\(|\)|[A-Z]|[0-1]|!|&|~|\||(->))+\)))(&|~|\||(->))([A-Z]|[0-1]|(\((\(|\)|[A-Z]|[0-1]|!|&|~|\||(->))+\)))\)$/)){
 		var substringWithPartialValuesStart = 0;
 		var lev = 0;//уровень вложенности
@@ -79,11 +65,6 @@ function stringWithPartialValuesCheck(inputStringVar){
 	}
 }
 
-//-----------------------------------------------------------------------------------------------
-
-
-//ЛР2
-
 function calculate(){
 	document.getElementById('TableBody').innerHTML = '';
 	document.getElementById('continueButtonDiv').innerHTML = '';
@@ -93,11 +74,7 @@ function calculate(){
 	} else {
 	var variablesArr = searchVariables(inputStringVar);
 	drawInputTable(variablesArr, inputStringVar);
-	//drawVariablesTable(variablesArr);//таблица для указания значений некоторых пееменных, добавить кнопку для продолжения
-	//var valueMatrix;//размерность зависит от количества заданных переменных
-	
-	//составить таблицу с возможными значениями переменных
-	//calculatestringWithPartialValuesValue, результат добавить в таблицу
+
 	}
 }
 
@@ -157,23 +134,7 @@ function drawInputTable(variablesArr, inputStringVar){
             printTableTruth(obj.table, obj.symbolSize);
 		}
 		
-//		var tbody = document.getElementById('TableBody');
-//		tbody.innerHTML = '';
-//		document.getElementById('continueButtonDiv').innerHTML = '';
-//		createHeadline(tbody, redusedVarArr);
-//		var numOfCombinations = Math.pow(2, redusedVarArr.length);
-//		for(var i = 0; i < numOfCombinations; i++){
-//			var values = i.toString(2);
-//			while(values.length < redusedVarArr.length){
-//				values = '0' + values;
-//			}
-//			var stringWithValues = stringWithPartialValues;
-//			for(j = 0; j < redusedVarArr.length; j++){
-//				stringWithValues = stringWithValues.replace(redusedVarArr[j], values[j]);
-//			}
-//			var value = calculateValue(stringWithValues);
-//			addInResult(tbody, values, value, redusedVarArr);
-//		}
+
 	};
 }
 
@@ -393,122 +354,3 @@ function printTableTruth(table, symbolSize) {
     tableElement.innerHTML = html;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-//function addInResult(tbody, values, value, redusedVarArr){
-//	var row = document.createElement("tr");
-//	for(var i = 0; i < redusedVarArr.length; i++){
-//		var cell = document.createElement("td");
-//		cell.innerHTML = values[i];
-//		row.appendChild(cell);
-//		//tbody.appendChild(row);
-//	}
-//	var cell = document.createElement("td");
-//    cell.innerHTML = value;
-//	row.appendChild(cell);
-//	tbody.appendChild(row);
-//}
-//
-//function createHeadline(tbody, redusedVarArr){
-//	var row = document.createElement("tr");
-//	for(var i = 0; i < redusedVarArr.length; i++){
-//		var cell = document.createElement("td");
-//        cell.innerHTML = redusedVarArr[i];
-//		row.appendChild(cell);
-//		//tbody.appendChild(row);
-//	}
-//	var cell = document.createElement("td");
-//    cell.innerHTML = 'Результат';
-//	row.appendChild(cell);
-//	tbody.appendChild(row);
-//}
-//
-//function calculateValue(stringWithValues){
-//	var unary_stringWithPartialValues = /\(\!([01])\)/g;
-//    var binary_stringWithPartialValues = /\(([01])([\&\|\~]|(\-\>))([01])\)/g;
-//	var conjunction = /\(([01])(\&)([01])\)/g;
-//	var disjunction = /\(([01])(\|)([01])\)/g;
-//	var implication = /\(([01])(\-\>)([01])\)/g;
-//	var equivalence = /\(([01])(\~)([01])\)/g;
-//
-//    while(stringWithValues.match(unary_stringWithPartialValues) || stringWithValues.match(binary_stringWithPartialValues)){
-//        if(stringWithValues.match(unary_stringWithPartialValues)){
-//			var match = stringWithValues.match(unary_stringWithPartialValues);
-//			for(var i = 0; i < match.length; i++){
-//				stringWithValues = stringWithValues.replace(match[i], unary_stringWithPartialValues_result(match[i]));
-//			}
-//		} else if(stringWithValues.match(conjunction)){
-//			var match = stringWithValues.match(conjunction);
-//			for(var i = 0; i < match.length; i++){
-//				stringWithValues = stringWithValues.replace(match[i], conjunction_result(match[i]));
-//			}
-//		} else if(stringWithValues.match(disjunction)){
-//			var match = stringWithValues.match(disjunction);
-//			for(var i = 0; i < match.length; i++){
-//				stringWithValues = stringWithValues.replace(match[i], disjunction_result(match[i]));
-//			}
-//		} else if(stringWithValues.match(implication)){
-//			var match = stringWithValues.match(implication);
-//			for(var i = 0; i < match.length; i++){
-//				stringWithValues = stringWithValues.replace(match[i], implication_result(match[i]));
-//			}
-//		} else if(stringWithValues.match(equivalence)){
-//			var match = stringWithValues.match(equivalence);
-//			for(var i = 0; i < match.length; i++){
-//				stringWithValues = stringWithValues.replace(match[i], equivalence_result(match[i]));
-//			}
-//		}
-//    }
-//	
-//	return stringWithValues;
-//}
-//
-//function unary_stringWithPartialValues_result(match){
-//	if(match.match(/\(\!([1])\)/g)){
-//		return 0;
-//	} else {
-//		return 1;
-//	}
-//}
-//
-//function conjunction_result(match){
-//	if(match.match(/\(([1])(\&)([1])\)/g)){
-//		return 1;
-//	} else {
-//		return 0;
-//	}
-//}
-//
-//function disjunction_result(match){
-//	if(match.match(/\(([0])(\|)([0])\)/g)){
-//		return 0;
-//	} else {
-//		return 1;
-//	}
-//}
-//
-//function implication_result(match){
-//	if((match.match(/\(([0])(\-\>)([01])\)/g))||(match.match(/\(([1])(\-\>)([1])\)/g))){
-//		return 1;
-//	} else {
-//		return 0;
-//	}
-//}
-//
-//function equivalence_result(match){
-//	if((match.match(/\(([0])(\~)([0])\)/g))||(match.match(/\(([1])(\~)([1])\)/g))){
-//		return 1;
-//	} else {
-//		return 0;
-//	}
-//}
