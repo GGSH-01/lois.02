@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="userTest.js"></script>
+    <script src="calculator.js"></script>
+       <style>
+      .dorova {      
+      margin-left: -8px;
+      margin-top: -8px;
+      position: absolute;
+      width: 100%;
+      height:100%;
+      background-image: url(%D0%BA%D1%83%D1%80%D0%BE%D1%87%D0%BA%D0%B0.png);
+      background-repeat: no-repeat;
+      background-size: 1540px 866px;
+      }
+      </style>
+    </head>
+  <body>
+      <div class="dorova">
+    <a href="./index.html">Назад</a>
+    <br/>
+    <form name="form" onsubmit="checkAnswer()">
+      <input type="text" name="answer-input">
+      <input type="submit" value="Проверить">
+    </form>
+    <button onclick="testUser()">Далее</button>
+    <br/>
+    <formula id="formula"></formula>
+    <br/>
+    <result id="result"></result>
+      </div>
+  </body>
+</html>
