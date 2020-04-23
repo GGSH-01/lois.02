@@ -68,6 +68,16 @@ function stringWithPartialValuesCheck(inputStringVar){
 function calculate(){
 	document.getElementById('TableBody').innerHTML = '';
 	document.getElementById('continueButtonDiv').innerHTML = '';
+    
+    document.getElementById('continueButtonDiv').style.display="block";
+    document.getElementById('Table').style.display="block";
+
+//    document.getElementById('continueButtonDiv').onclick = function() {
+//      document.getElementById('continueButtonDiv').hidden = true;
+//    }
+//        document.getElementById('continueButtonOne').onclick = function() {
+//      document.getElementById('continueButtonDiv').style.display="block";
+//    }
 	var inputStringVar = document.getElementById('inputString').value;
 	if(!stringWithPartialValuesCheck(inputStringVar)){
 		alert("Строка НЕ является формулой логики высказываний или не содержит символов.");
@@ -108,15 +118,23 @@ function drawInputTable(variablesArr, inputStringVar){
 	}
 	tbody.appendChild(row1);
 	tbody.appendChild(row2);
-	
+
 	continueButton = document.createElement("button");
 	continueButton.innerHTML = 'Рассчитать возможные значения формулы';
 	document.getElementById('continueButtonDiv').appendChild(continueButton);
-    
+
+//    document.getElementById('continueButtonDiv').onclick = function() {
+//      document.getElementById('continueButtonDiv').style.display="none";
+//    }
+//        document.getElementById('continueButtonOne').onclick = function() {
+//      document.getElementById('continueButtonDiv').style.display="block";
+//    }	
 	var stringWithPartialValues = inputStringVar;
 	continueButton.onclick = function() {
 		
-		
+        document.getElementById('continueButtonDiv').style.display="none";
+        document.getElementById('Table').style.display="none";
+        
 		var redusedVarArr = [];
 		for(var i = 0; i < variablesArr.length; i++){
 		var inputValue = document.getElementById('input' + i).value;
@@ -131,16 +149,22 @@ function drawInputTable(variablesArr, inputStringVar){
 			}
             console.log(stringWithPartialValues)
             let obj = calculateTableTruth(stringWithPartialValues);
-            printTableTruth(obj.table, obj.symbolSize);
+            
+            if (obj.table !== undefined){
+                printTableTruth(obj.table, obj.symbolSize);
+            }
+            else if (obj.containsOnes === true){
+                alert("ответ 1");
+            }
+            else{
+                alert("ответ 0");
+            }
+    
 		}
 		
 
 	};
 }
-
-
-
-
 
 
 function calculateTableTruth(stringWithPartialValues) {
@@ -324,7 +348,7 @@ function calculateEquivalence(substringWithPartialValues) {
 }
 
 function printTableTruth(table, symbolSize) {
-    console.log(table)
+//    console.log(table)
     let tableSize = Math.pow(2, symbolSize);
     let html = "";
 
