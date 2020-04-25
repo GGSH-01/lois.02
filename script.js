@@ -9,17 +9,43 @@ const FORMULA_REGEXP = new RegExp('([(]([A-Z]|[0-1])((->)|(&)|(\\|)|(~))([A-Z]|[
 let countAnswer = 0;
 let n = 1;
 
-function verificate(){
-	//var isCorrect = false;
-	
-    var inputStringVar = document.getElementById('inputString').value;
+    function startYes(){
+    userAnswer = 1; 
+    calculate();
+    }
 
-	if(stringWithPartialValuesCheck(inputStringVar)){
-		alert("Строка является формулой логики высказываний.");
-	} else {
-		alert("Строка НЕ является формулой логики высказываний или не содержит символов.");
+    function startNo(){
+    userAnswer = 0; 
+    calculate();
+    }
+
+function checkValidation(inputStringVar) 
+	{
+		var constOrAtom = inputStringVar.match(/^[A-Z0-1]{1}$/);
+		if(constOrAtom != null) answerFirstTask = 1;			
+		else 
+		{	
+			var oldFormula = inputStringVar;
+			inputStringVar = inputStringVar.replace(/(\([A-Z0-1]{1}([&\|~]|(->))[A-Z0-1]{1}\))|(\(![A-Z0-1]\))/g, "1");
+		
+			if(oldFormula != inputStringVar)
+				checkValidation(inputStringVar);
+			else answerFirstTask = 0;
+		}
+		return answerFirstTask;
 	}
-}
+
+//function verificate(){
+//	//var isCorrect = false;
+//	
+//    var inputStringVar = document.getElementById('inputString').value;
+//    
+//	if(stringWithPartialValuesCheck(inputStringVar)){
+//		alert("Строка является формулой логики высказываний.");
+//	} else {
+//		alert("Строка НЕ является формулой логики высказываний или не содержит символов.");
+//	}
+//}
 
 function stringWithPartialValuesCheck(inputStringVar){
 	if(inputStringVar.length == 1){
@@ -74,22 +100,30 @@ function calculate(){
 
     document.getElementById('table').style.display="none";
     
-//    document.getElementById('continueButtonDiv').onclick = function() {
-//      document.getElementById('continueButtonDiv').hidden = true;
-//    }
-//        document.getElementById('continueButtonOne').onclick = function() {
-//      document.getElementById('continueButtonDiv').style.display="block";
-//    }
-	var inputStringVar = document.getElementById('inputString').value;
-	if(!stringWithPartialValuesCheck(inputStringVar)){
-		alert("Строка НЕ является формулой логики высказываний или не содержит символов.");
-	} else {
-	var variablesArr = searchVariables(inputStringVar);
-	drawInputTable(variablesArr, inputStringVar);
-        console.log(inputStringVar)
 
-	}
-}
+    var inputStringVar = document.getElementById("inputString").value;
+    
+    answerFirstTask = checkValidation(inputStringVar);
+    if (userAnswer == answerFirstTask){
+            var variablesArr = searchVariables(inputStringVar);
+	        drawInputTable(variablesArr, inputStringVar);
+    }
+        else
+            alert("Строка НЕ является формулой логики высказываний или не содержит символов.");
+}        
+    
+    
+    
+//	var inputStringVar = document.getElementById('inputString').value;
+//	if(!stringWithPartialValuesCheck(inputStringVar)){
+//		alert("Строка НЕ является формулой логики высказываний или не содержит символов.");
+//	} else {
+//	var variablesArr = searchVariables(inputStringVar);
+//	drawInputTable(variablesArr, inputStringVar);
+//        console.log(inputStringVar)
+//
+//	}
+//}
 
 function searchVariables(inputStringVar){
 	var variablesArr = [];
