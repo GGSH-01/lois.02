@@ -72,6 +72,8 @@ function calculate(){
     document.getElementById('continueButtonDiv').style.display="block";
     document.getElementById('Table').style.display="block";
 
+    document.getElementById('table').style.display="none";
+    
 //    document.getElementById('continueButtonDiv').onclick = function() {
 //      document.getElementById('continueButtonDiv').hidden = true;
 //    }
@@ -84,6 +86,7 @@ function calculate(){
 	} else {
 	var variablesArr = searchVariables(inputStringVar);
 	drawInputTable(variablesArr, inputStringVar);
+        console.log(inputStringVar)
 
 	}
 }
@@ -134,6 +137,7 @@ function drawInputTable(variablesArr, inputStringVar){
 		
         document.getElementById('continueButtonDiv').style.display="none";
         document.getElementById('Table').style.display="none";
+        document.getElementById('table').style.display="block";
         
 		var redusedVarArr = [];
 		for(var i = 0; i < variablesArr.length; i++){
@@ -151,13 +155,20 @@ function drawInputTable(variablesArr, inputStringVar){
             let obj = calculateTableTruth(stringWithPartialValues);
             
             if (obj.table !== undefined){
+                document.getElementById('table').style.display="block";
                 printTableTruth(obj.table, obj.symbolSize);
             }
             else if (obj.containsOnes === true){
-                alert("ответ 1");
+//                document.getElementById('table').style.display="none";
+//                alert("ответ 1");
+                let tableElement = document.getElementById('table');
+    tableElement.innerHTML = "Ответ 1";
             }
             else{
-                alert("ответ 0");
+//                document.getElementById('table').style.display="none";
+//                alert("ответ 0");
+                let tableElement = document.getElementById('table');
+    tableElement.innerHTML = "Ответ 0";
             }
     
 		}
